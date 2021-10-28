@@ -4,12 +4,17 @@ import (
 	"context"
 	"log"
 
+	"github.com/Juanantogg/server-go-twittor/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+var dbUser = utils.GoDotEnvVariable("DB_USER")
+var dbPassword = utils.GoDotEnvVariable("DB_PASSWORD")
+var dbURI = utils.GoDotEnvVariable("DB_URI")
+
 var MongoConnection = DBConnect()
-var clientOptions = options.Client().ApplyURI("mongodb+srv://dbUser:dbUser@twittor-0.ykk4r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+var clientOptions = options.Client().ApplyURI("mongodb+srv://" + dbUser + ":" + dbPassword + dbURI)
 
 func DBConnect() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), clientOptions)
